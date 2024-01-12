@@ -3,6 +3,7 @@ from typing import Any, Dict, Tuple
 import torch
 from lightning import LightningModule
 from torchmetrics import MaxMetric, MeanMetric
+from torchmetrics.image import MultiScaleStructuralSimilarityIndexMeasure
 from torchmetrics.image import PeakSignalNoiseRatio
 from torchmetrics.classification.accuracy import Accuracy
 from torch.optim import Adam
@@ -21,7 +22,7 @@ class UNetModule(LightningModule):
 
         self.model = model
 
-        self.criterion = torch.nn.MSELoss()
+        self.criterion = MultiScaleStructuralSimilarityIndexMeasure()
 
         self.train_psnr = PeakSignalNoiseRatio()
         self.val_psnr = PeakSignalNoiseRatio()
