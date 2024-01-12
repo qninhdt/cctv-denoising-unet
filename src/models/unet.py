@@ -71,13 +71,8 @@ class UNet(nn.Module):
             key = f"layer_{self.DEPTH - 1 - i}"
             x = block(x, pre_pools[key])
 
-        output_feature_map = x
+        del pre_pools
 
         x = self.out(x)
 
-        del pre_pools
-
-        if with_output_feature_map:
-            return x, output_feature_map
-        else:
-            return x
+        return x
