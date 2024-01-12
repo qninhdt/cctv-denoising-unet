@@ -38,7 +38,7 @@ class UNetModule(LightningModule):
 
         pred_images = self.forward(unclean_images)
 
-        loss = torch.nn.functional.mse_loss(pred_images, clean_images)
+        loss = 1000 * torch.nn.functional.mse_loss(pred_images, clean_images)
 
         return loss, pred_images, clean_images
 
