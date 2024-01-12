@@ -53,6 +53,12 @@ class UNetModule(LightningModule):
         self.train_mean_loss(loss)
 
         self.log("train/loss", loss, prog_bar=True, sync_dist=True)
+        self.log(
+            "lr",
+            self.trainer.optimizers[0].param_groups[0]["lr"],
+            prog_bar=True,
+            sync_dist=True,
+        )
 
         return loss
 
@@ -111,8 +117,10 @@ class UNetModule(LightningModule):
         )
 
     def configure_optimizers(self) -> Dict[str, Any]:
-        optimizer = Adam(self.parameters(), lr=0.01)
-        scheduler = ReduceLROnPlateau(optimizer, mode="max", patience=10, verbose=True)
+        optimizer = Adam(self.parameters(), lr=0.001)
+        scheduler = ReduceLROnPlateau(
+            optimizer, mode="max", patience=10, verbose=True, factor=0.1
+        )
 
         return {
             "optimizer": optimizer,
