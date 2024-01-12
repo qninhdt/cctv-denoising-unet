@@ -1,0 +1,7 @@
+_target_: data.cctv_datamodule.CCTVDataModule
+clean_data_dir: ${paths.data_dir}/clean_cctv
+unclean_data_dir: ${paths.data_dir}/unclean_cctv
+batch_size: 8
+train_val_test_split: [14000, 2000, 2000]
+num_workers: 10
+pin_memory: False

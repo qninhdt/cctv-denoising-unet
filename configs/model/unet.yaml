@@ -1,0 +1,6 @@
+_target_: models.unet_module.UNetModule
+
+model:
+  _target_: models.unet.UNet
+
+compile: false
