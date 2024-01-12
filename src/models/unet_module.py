@@ -22,7 +22,7 @@ class UNetModule(LightningModule):
 
         self.model = model
 
-        self.criterion = MultiScaleStructuralSimilarityIndexMeasure()
+        self.ms_ssim = MultiScaleStructuralSimilarityIndexMeasure()
 
         self.train_psnr = PeakSignalNoiseRatio()
         self.val_psnr = PeakSignalNoiseRatio()
@@ -40,7 +40,7 @@ class UNetModule(LightningModule):
 
         pred_images = self.forward(unclean_images)
 
-        loss = self.criterion(pred_images, clean_images)
+        loss = 1 - self.ms_ssim(pred_images, clean_images)
 
         return loss, pred_images, clean_images
 
